@@ -62,7 +62,7 @@ DB_USERNAME=root
 DB_PASSWORD=
 ```
 
-### 4️⃣ Generáld az alkalmazás kulcsát
+### 4️⃣ Futtasd a migrációkat
 ```bash
 php artisan migrate
 ```
