@@ -4,18 +4,20 @@ namespace App\Http\Controllers\API\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Auth\Events\Verified;
-use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Http\JsonResponse;
 
 class VerifyEmailController extends Controller
 {
-    public function verify($id, $hash)
+    /**
+     * @param $id
+     * @param string $hash
+     * @return JsonResponse
+     */
+   /* public function verify($id, string $hash): JsonResponse
     {
-        $user = User::findOrFail($id);
+        $user = User::find($id);
 
-        // validate hash
-        if (!hash_equals((string) $hash, sha1($user->email))) {
+        if (!$user || !hash_equals($hash, sha1($user->email))) {
             return response()->json(['message' => 'Invalid verification link.'], 403);
         }
 
@@ -24,34 +26,7 @@ class VerifyEmailController extends Controller
         }
 
         $user->markEmailAsVerified();
-        event(new Verified($user));
 
         return response()->json(['message' => 'Email verified successfully.']);
-    }
-
-    public function resend(Request $request)
-    {
-        $request->validate(['email' => 'required|email']);
-
-        $email = $request->input('email');
-        $user = User::where('email', $email)->first();
-
-        if (! $user) {
-            return response()->json(['message' => 'User not found.'], 404);
-        }
-
-        if ($user->hasVerifiedEmail()) {
-            return response()->json(['message' => 'Email already verified.']);
-        }
-
-        $key = 'resend-verify:' . $user->id;
-        if (RateLimiter::tooManyAttempts($key, 3)) {
-            return response()->json(['message' => 'Too many requests. Try later.'], 429);
-        }
-        RateLimiter::hit($key, 60);
-
-        $user->sendEmailVerificationNotification();
-
-        return response()->json(['message' => 'Verification email resent.']);
-    }
+    }*/
 }
