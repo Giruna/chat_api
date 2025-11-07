@@ -44,11 +44,12 @@ class AuthService
         $user = User::findByEmail($email);
 
         if (!$user || !Hash::check($password, $user->password)) {
-            return response()->json(['message' => 'Wrong email or password'], 401);
+            return response()->json(['success' => false, 'message' => 'Wrong email or password'], 401);
         }
 
         if (is_null($user->email_verified_at)) {
             return response()->json([
+                'success' => false,
                 'message' => 'To log in, you must first confirm your email address.'
             ], 403);
         }
@@ -56,6 +57,7 @@ class AuthService
         $token = $user->createToken('FrontendApp')->plainTextToken;
 
         return response()->json([
+            'success' => true,
             'user' => $user,
             'token' => $token,
         ]);

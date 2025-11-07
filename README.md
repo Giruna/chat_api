@@ -1,6 +1,8 @@
-# Chat API – Laravel alapú üzenetküldő rendszer
+# Chat API – Laravel alapú üzenetküldő rendszer, Vue.js Frontenddel
 
-Ez a projekt egy RESTful API, amely lehetővé teszi a felhasználók számára, hogy regisztráljanak, megerősítsék az e-mail címüket, ismerősnek jelöljék egymást, és üzeneteket küldjenek egymásnak.
+Ez a projekt egy RESTful API-t valósít meg, amely lehetővé teszi a felhasználók számára, hogy regisztráljanak, megerősítsék az e-mail címüket, ismerősnek jelöljék egymást, és üzeneteket küldjenek egymásnak.  
+A backend a Laravel keretrendszerre épül, míg a felhasználói felület Vue.js-t használ
+
 
 ---
 
@@ -28,6 +30,7 @@ Ez a projekt egy RESTful API, amely lehetővé teszi a felhasználók számára,
 
 ## ⚙️ Technikai követelmények
 
+### 🧩 Backend követelmények
 |  | Verzió / Követelmény |
 |------|----------------------|
 | PHP verzió | 8.3 vagy újabb |
@@ -35,6 +38,12 @@ Ez a projekt egy RESTful API, amely lehetővé teszi a felhasználók számára,
 | Adatbázis | MySQL vagy MariaDB |
 | Autentikáció | Laravel Sanctum + e-mail verifikáció |
 | API struktúra | RESTful elvek szerint |
+### 🖥️ Frontend követelmények
+|  | Verzió / Követelmény |
+|------|----------------------|
+| Frontend keretrendszer | Vue 3.x |
+| HTTP kliens | Axios 1.11 |
+| UI komponenskönyvtár | Vuetify 3.x |
 
 ---
 

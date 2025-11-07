@@ -33,6 +33,6 @@ class UserController extends Controller
             $itemsPerPage
         );
 
-        return response()->json($users);
+        return response()->json(array_merge(['success' => true], $users->toArray()));
     }
 }
