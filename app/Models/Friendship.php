@@ -22,6 +22,7 @@ class Friendship extends Model
 
     public const STATUS_PENDING = 'pending';
     public const STATUS_ACCEPTED = 'accepted';
+    public const STATUS_REJECTED = 'rejected';
 
     public function sender(): BelongsTo
     {
@@ -86,6 +87,16 @@ class Friendship extends Model
     public function accept(): bool
     {
         $this->status = self::STATUS_ACCEPTED;
+
+        return $this->save();
+    }
+
+    /**
+     * @return bool
+     */
+    public function reject(): bool
+    {
+        $this->status = self::STATUS_REJECTED;
 
         return $this->save();
     }

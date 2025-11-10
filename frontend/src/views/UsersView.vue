@@ -1,5 +1,5 @@
 <template>
-  <v-container class="d-flex justify-center messages">
+  <v-container class="d-flex justify-center users">
     <v-progress-circular
       v-if="loading"
       color="primary" class="ma-auto"
@@ -26,6 +26,20 @@
             >
               {{ getStatusLabel(item.friend_status) }}
             </v-chip>
+          </template>
+
+          <template #item.actions="{ item }">
+            <div v-if="item.friend_status === 'accepted'" class="text-center">
+              <img
+                src="@/assets/icons/send-message.svg"
+                :title="`Send message to ${item.name}`"
+                alt="Send message"
+                width="22"
+                height="22"
+                style="cursor: pointer"
+                @click="sendMessage(item)"
+              />
+            </div>
           </template>
 
         </v-data-table>
@@ -75,6 +89,7 @@ const headers = [
   { title: 'ID', key: 'id' },
   { title: 'Name', key: 'name' },
   { title: 'Friend status', key: 'friend_status' },
+  { title: '', key: 'actions', sortable: false },
 ]
 
 // Fetch users from API
@@ -119,6 +134,8 @@ function getStatusColor(status: string | null) {
       return 'green'
     case 'pending':
       return 'orange'
+    case 'rejected':
+      return 'red'
     default:
       return 'grey'
   }
@@ -130,17 +147,15 @@ function getStatusLabel(status: string | null) {
       return 'Friend'
     case 'pending':
       return 'Pending'
+    case 'rejected':
+      return 'Rejected'
     default:
       return 'Not friend'
   }
 }
-</script>
 
-<style>
-@media (min-width: 1024px) {
-  .messages {
-    min-height: 80vh;
-    display: flex;
-  }
+function sendMessage(item) {
+  console.log('Send message clicked for:', item.name)
 }
-</style>
+
+</script>

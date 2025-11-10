@@ -65,12 +65,3 @@ async function onSubmit() {
   }
 }
 </script>
-
-<style>
-@media (min-width: 1024px) {
-  .login {
-    min-height: 100vh;
-    display: flex;
-  }
-}
-</style>

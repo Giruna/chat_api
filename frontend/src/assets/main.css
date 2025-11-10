@@ -44,3 +44,14 @@ a,
     padding: 0 2rem;
   }
 }
+
+@media (min-width: 1024px) {
+  .users {
+    min-height: 80vh;
+    display: flex;
+  }
+  .login, .logout, .signup, .messages, .friend-requests {
+    min-height: 100vh;
+    display: flex;
+  }
+}

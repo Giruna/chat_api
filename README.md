@@ -119,6 +119,16 @@ php artisan migrate
 
 ---
 
+### 🔸 Ismerős kérés elutasítása
+**POST** `/api/friend-request/{senderId}/reject`
+
+---
+
+### 🔸 Ismerős felkérések listája
+**GET** `/api/friend-request-received`
+
+---
+
 ### 🔸 Felhasználók listázása
 **GET** `/api/users?page=1&per_page=5&search=Gábor`
 
@@ -140,16 +150,18 @@ php artisan migrate
 ---
 
 
-| Method | Endpoint | Description | Auth Required |
-|:-------|:----------|:-------------|:---------------|
-| POST | `/register` | Register new user | No |
-| GET | `/email/verify/{id}/{hash}` | Verify email | No |
-| POST | `/login` | User login, returns token | No |
-| GET | `/users` | Paginated user list | ✅ |
-| POST | `/friend-request/{receiverId}` | Send friend request | ✅ |
-| POST | `/friend-request/{senderId}/accept` | Accept friend request | ✅ |
-| POST | `/messages/{receiverId}` | Send message | ✅ |
-| GET | `/messages/{friendId}` | Get conversation | ✅ |
+| Method | Endpoint                            | Description               | Auth Required |
+|:-------|:------------------------------------|:--------------------------|:---------------|
+| POST   | `/register`                         | Register new user         | No |
+| GET    | `/email/verify/{id}/{hash}`         | Verify email              | No |
+| POST   | `/login`                            | User login, returns token | No |
+| GET    | `/users`                            | Paginated user list       | ✅ |
+| POST   | `/friend-request/{receiverId}`      | Send friend request       | ✅ |
+| POST   | `/friend-request/{senderId}/accept` | Accept friend request     | ✅ |
+| POST   | `/friend-request/{senderId}/reject` | Reject friend request     | ✅ |
+| GET    | `/friend-request-received`          | Requests list             | ✅ |
+| POST   | `/messages/{receiverId}`            | Send message              | ✅ |
+| GET    | `/messages/{friendId}`              | Get conversation          | ✅ |
 
 ---
 

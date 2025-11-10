@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -106,7 +107,13 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function receivedFriendRequests(): HasMany
     {
-        return $this->hasMany(Friendship::class, 'receiver_id');
+        return $this->hasMany(Friendship::class, 'receiver_id')
+            ->where('status', Friendship::STATUS_PENDING);
+    }
+
+    public function sender(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'sender_id');
     }
 
     public function friends(): BelongsToMany

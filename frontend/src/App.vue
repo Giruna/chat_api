@@ -23,6 +23,7 @@ window.addEventListener('auth-changed', () => {
         <RouterLink v-if="!isLoggedIn" to="/signup">Join now</RouterLink>
 
         <RouterLink v-if="isLoggedIn" to="/users">Users list</RouterLink>
+        <RouterLink v-if="isLoggedIn" to="/friend-requests">Friend requests</RouterLink>
         <RouterLink v-if="isLoggedIn" to="/logout">Logout</RouterLink>
       </nav>
     </div>

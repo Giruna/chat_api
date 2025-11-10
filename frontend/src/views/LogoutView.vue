@@ -11,17 +11,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <v-container class="d-flex justify-center messages">
+  <v-container class="d-flex justify-center logout">
     <h1>LOGOUT page</h1>
   </v-container>
 </template>
-
-
-<style>
-@media (min-width: 1024px) {
-  .messages {
-    min-height: 100vh;
-    display: flex;
-  }
-}
-</style>

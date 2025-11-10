@@ -35,4 +35,23 @@ class FriendshipController extends Controller
     {
         return $this->friendshipService->acceptRequest($request->user(), $senderId);
     }
+
+    /**
+     * @param Request $request
+     * @param int $senderId
+     * @return JsonResponse
+     */
+    public function rejectRequest(Request $request, int $senderId): JsonResponse
+    {
+        return $this->friendshipService->rejectRequest($request->user(), $senderId);
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function receivedFriendRequests(Request $request): JsonResponse
+    {
+        return $this->friendshipService->receivedFriendRequests($request->user());
+    }
 }
