@@ -109,23 +109,38 @@ php artisan migrate
 ---
 
 ### 🔸 Ismerősnek jelölés
-**POST** `/api/friend-request/{receiverId}`  
+**POST** `/api/friend-request/send`  
 *Csak bejelentkezett és hitelesített felhasználók számára.*
+```json
+{
+  "receiver_id": 34
+}
+```
 
 ---
 
 ### 🔸 Ismerős kérés elfogadása
-**POST** `/api/friend-request/{senderId}/accept`
+**POST** `/api/friend-request/accept`
+```json
+{
+  "sender_id": 64
+}
+```
 
 ---
 
 ### 🔸 Ismerős kérés elutasítása
-**POST** `/api/friend-request/{senderId}/reject`
+**POST** `/api/friend-request/reject`
+```json
+{
+  "sender_id": 78
+}
+```
 
 ---
 
 ### 🔸 Ismerős felkérések listája
-**GET** `/api/friend-request-received`
+**GET** `/api/friend-request/received`
 
 ---
 
@@ -150,23 +165,23 @@ php artisan migrate
 ---
 
 
-| Method | Endpoint                            | Description               | Auth Required |
-|:-------|:------------------------------------|:--------------------------|:---------------|
-| POST   | `/register`                         | Register new user         | No |
-| GET    | `/email/verify/{id}/{hash}`         | Verify email              | No |
-| POST   | `/login`                            | User login, returns token | No |
-| GET    | `/users`                            | Paginated user list       | ✅ |
-| POST   | `/friend-request/{receiverId}`      | Send friend request       | ✅ |
-| POST   | `/friend-request/{senderId}/accept` | Accept friend request     | ✅ |
-| POST   | `/friend-request/{senderId}/reject` | Reject friend request     | ✅ |
-| GET    | `/friend-request-received`          | Requests list             | ✅ |
-| POST   | `/messages/{receiverId}`            | Send message              | ✅ |
-| GET    | `/messages/{friendId}`              | Get conversation          | ✅ |
+| Method | Endpoint                    | Description               | Auth Required |
+|:-------|:----------------------------|:--------------------------|:---------------|
+| POST   | `/register`                 | Register new user         | No |
+| GET    | `/email/verify/{id}/{hash}` | Verify email              | No |
+| POST   | `/login`                    | User login, returns token | No |
+| GET    | `/users`                    | Paginated user list       | ✅ |
+| POST   | `/friend-request/send`      | Send friend request       | ✅ |
+| POST   | `/friend-request/accept`    | Accept friend request     | ✅ |
+| POST   | `/friend-request/reject`    | Reject friend request     | ✅ |
+| GET    | `/friend-request/received`  | Requests list             | ✅ |
+| POST   | `/messages/{receiverId}`    | Send message              | ✅ |
+| GET    | `/messages/{friendId}`      | Get conversation          | ✅ |
 
 ---
 
 ## 🧑‍💻 Készítette
 **Ungvári Imre**  
-📧 imreungvari75@gmail.com  
+📧 imre.ungvari75@gmail.com  
 💻 Laravel 12 / PHP 8.3 / MySQL  
 📅 2025

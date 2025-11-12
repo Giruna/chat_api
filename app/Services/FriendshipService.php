@@ -127,7 +127,7 @@ class FriendshipService
             return response()->json([
                 'success' => true,
                 'data' => $senders
-            ], 404);
+            ]);
         } catch (Exception $e) {
             return response()->json([
                 'success' => false,

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FriendRequestActionsRequest;
 use App\Services\FriendshipService;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -17,33 +18,30 @@ class FriendshipController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param int $receiverId
+     * @param FriendRequestActionsRequest $request
      * @return JsonResponse
      */
-    public function sendRequest(Request $request, int $receiverId): JsonResponse
+    public function sendRequest(FriendRequestActionsRequest $request): JsonResponse
     {
-        return $this->friendshipService->sendRequest($request->user(), $receiverId);
+        return $this->friendshipService->sendRequest($request->user(), $request->validated('receiver_id'));
     }
 
     /**
-     * @param Request $request
-     * @param int $senderId
+     * @param FriendRequestActionsRequest $request
      * @return JsonResponse
      */
-    public function acceptRequest(Request $request, int $senderId): JsonResponse
+    public function acceptRequest(FriendRequestActionsRequest $request): JsonResponse
     {
-        return $this->friendshipService->acceptRequest($request->user(), $senderId);
+        return $this->friendshipService->acceptRequest($request->user(), $request->validated('sender_id'));
     }
 
     /**
-     * @param Request $request
-     * @param int $senderId
+     * @param FriendRequestActionsRequest $request
      * @return JsonResponse
      */
-    public function rejectRequest(Request $request, int $senderId): JsonResponse
+    public function rejectRequest(FriendRequestActionsRequest $request): JsonResponse
     {
-        return $this->friendshipService->rejectRequest($request->user(), $senderId);
+        return $this->friendshipService->rejectRequest($request->user(), $request->validated('sender_id'));
     }
 
     /**

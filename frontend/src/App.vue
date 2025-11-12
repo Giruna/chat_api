@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// import { computed } from 'vue'
 import { ref, watchEffect } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import HeaderTexts from './components/HeaderTexts.vue'

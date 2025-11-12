@@ -19,16 +19,17 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     // Send a friend request
-    Route::post('/friend-request/{receiverId}', [FriendshipController::class, 'sendRequest']);
+    Route::post('/friend-request/send', [FriendshipController::class, 'sendRequest'])
+        ->name('friend-request.send');
 
     // Accept a friend request
-    Route::post('/friend-request/{senderId}/accept', [FriendshipController::class, 'acceptRequest']);
+    Route::post('/friend-request/accept', [FriendshipController::class, 'acceptRequest']);
 
     // Reject a friend request
-    Route::post('/friend-request/{senderId}/reject', [FriendshipController::class, 'rejectRequest']);
+    Route::post('/friend-request/reject', [FriendshipController::class, 'rejectRequest']);
 
     // Received friend requests
-    Route::get('/friend-request-received', [FriendshipController::class, 'receivedFriendRequests']);
+    Route::get('/friend-request/received', [FriendshipController::class, 'receivedFriendRequests']);
 
     // Users list (paginated)
     Route::get('/users', [UserController::class, 'usersList']);
