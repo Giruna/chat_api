@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
+import { ref } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import HeaderTexts from './components/HeaderTexts.vue'
 
@@ -23,6 +23,7 @@ window.addEventListener('auth-changed', () => {
 
         <RouterLink v-if="isLoggedIn" to="/users">Users list</RouterLink>
         <RouterLink v-if="isLoggedIn" to="/friend-requests">Friend requests</RouterLink>
+        <RouterLink v-if="isLoggedIn" to="/messages">Messages</RouterLink>
         <RouterLink v-if="isLoggedIn" to="/logout">Logout</RouterLink>
       </nav>
     </div>

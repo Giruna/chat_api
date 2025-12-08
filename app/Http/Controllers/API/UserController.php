@@ -35,4 +35,24 @@ class UserController extends Controller
 
         return response()->json(array_merge(['success' => true], $users->toArray()));
     }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function friendsList(Request $request): JsonResponse
+    {
+        $authenticatedUser = $request->user();
+
+        $friends = $this->userService->getFriends($authenticatedUser->id);
+
+        return response()->json(
+            array_merge(
+                ['success' => true],
+                ['data' => $friends->map(function($friend) {
+                    return $friend->toArray();
+                })->toArray()]
+            )
+        );
+    }
 }

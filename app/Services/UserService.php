@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\User;
 use App\Models\Friendship;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserService
@@ -26,5 +27,20 @@ class UserService
         });
 
         return $paginatedUsers;
+    }
+
+    /**
+     * @param $userId
+     * @return Collection
+     */
+    public function getFriends($userId): Collection
+    {
+        /** @var User $user */
+        $user = User::find($userId);
+
+        $sentFriends = $user->acceptedSentFriendRequests()->get();
+        $receivedFriends = $user->acceptedReceivedFriendRequests()->get();
+
+        return $sentFriends->merge($receivedFriends);
     }
 }

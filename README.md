@@ -144,6 +144,10 @@ php artisan migrate
 
 ---
 
+### 🔸 Barátok listázása
+**GET** `/api/friends`
+
+---
 ### 🔸 Felhasználók listázása
 **GET** `/api/users?page=1&per_page=5&search=Gábor`
 
@@ -166,17 +170,18 @@ php artisan migrate
 
 
 | Method | Endpoint                    | Description               | Auth Required |
-|:-------|:----------------------------|:--------------------------|:---------------|
-| POST   | `/register`                 | Register new user         | No |
-| GET    | `/email/verify/{id}/{hash}` | Verify email              | No |
-| POST   | `/login`                    | User login, returns token | No |
-| GET    | `/users`                    | Paginated user list       | ✅ |
-| POST   | `/friend-request/send`      | Send friend request       | ✅ |
-| POST   | `/friend-request/accept`    | Accept friend request     | ✅ |
-| POST   | `/friend-request/reject`    | Reject friend request     | ✅ |
-| GET    | `/friend-request/received`  | Requests list             | ✅ |
-| POST   | `/messages/{receiverId}`    | Send message              | ✅ |
-| GET    | `/messages/{friendId}`      | Get conversation          | ✅ |
+|:-------|:----------------------------|:--------------------------|:--------------|
+| POST   | `/register`                 | Register new user         | No            |
+| GET    | `/email/verify/{id}/{hash}` | Verify email              | No            |
+| POST   | `/login`                    | User login, returns token | No            |
+| POST   | `/friend-request/send`      | Send friend request       | ✅             |
+| POST   | `/friend-request/accept`    | Accept friend request     | ✅             |
+| POST   | `/friend-request/reject`    | Reject friend request     | ✅             |
+| GET    | `/friend-request/received`  | Friend requests list      | ✅             |
+| GET    | `/friends`                  | Friends list              | ✅             |
+| GET    | `/users`                    | Paginated user list       | ✅             |
+| POST   | `/messages/{receiverId}`    | Send message              | ✅             |
+| GET    | `/messages/{friendId}`      | Get conversation          | ✅             |
 
 ---
 

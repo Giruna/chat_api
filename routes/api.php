@@ -31,6 +31,9 @@ Route::middleware('auth:sanctum')->group(function () {
     // Received friend requests
     Route::get('/friend-request/received', [FriendshipController::class, 'receivedFriendRequests']);
 
+    // Friends list
+    Route::get('/friends', [UserController::class, 'friendsList']);
+
     // Users list (paginated)
     Route::get('/users', [UserController::class, 'usersList']);
 

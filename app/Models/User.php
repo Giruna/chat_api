@@ -116,13 +116,25 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo(User::class, 'sender_id');
     }
 
-    public function friends(): BelongsToMany
+    public function acceptedSentFriendRequests(): BelongsToMany
     {
         return $this->belongsToMany(
             User::class,
             'friendships',
             'sender_id',
             'receiver_id'
-        )->wherePivot('status', 'accepted');
+        )
+            ->wherePivot('status', Friendship::STATUS_ACCEPTED);
+    }
+
+    public function acceptedReceivedFriendRequests(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            User::class,
+            'friendships',
+            'receiver_id',
+            'sender_id'
+        )
+            ->wherePivot('status', Friendship::STATUS_ACCEPTED);
     }
 }

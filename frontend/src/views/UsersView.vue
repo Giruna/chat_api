@@ -29,6 +29,17 @@
           </template>
 
           <template #item.actions="{ item }">
+            <div v-if="item.friend_status === null" class="text-center">
+              <img
+                src="@/assets/icons/add-friend.svg"
+                :title="`Add ${item.name} as friend`"
+                alt="Send message"
+                width="22"
+                height="22"
+                style="cursor: pointer"
+                @click="addFriend(item)"
+              />
+            </div>
             <div v-if="item.friend_status === 'accepted'" class="text-center">
               <img
                 src="@/assets/icons/send-message.svg"
@@ -56,6 +67,18 @@
 
       </v-card>
 
+      <!-- Actions message -->
+      <v-alert
+        v-if="actionsMessage"
+        type="success"
+        class="mt-4"
+        border="start"
+        variant="tonal"
+        closable
+      >
+        {{ actionsMessage }}
+      </v-alert>
+
       <!-- Error message -->
       <v-alert v-if="errorMessage" type="error" class="mt-4" border="start" variant="tonal"
         closable
@@ -80,6 +103,7 @@ const perPage = ref(5)
 const search = ref('')
 const token = localStorage.getItem('token')
 
+const actionsMessage = ref('')
 const errorMessage = ref('')
 const items = ref([])
 const lastPage = ref(1)
@@ -151,6 +175,34 @@ function getStatusLabel(status: string | null) {
       return 'Rejected'
     default:
       return 'Not friend'
+  }
+}
+
+async function addFriend(item) {
+  try {
+    const response = await axios.post(
+      `${baseUrl}/api/friend-request/send`,
+      {
+        receiver_id: item.id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+
+    const data = response.data
+
+    if (data.success === true) {
+      actionsMessage.value = data.message
+
+      await fetchUsers()
+    } else {
+      errorMessage.value = data.message || 'Something went wrong.'
+    }
+  } catch (error) {
+    errorMessage.value = errorHandling(error.response)
   }
 }
 
