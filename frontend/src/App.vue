@@ -18,13 +18,18 @@ window.addEventListener('auth-changed', () => {
       <HeaderTexts msg="Chatterboxerino!" />
 
       <nav>
-        <RouterLink v-if="!isLoggedIn" to="/">Sign in</RouterLink>
-        <RouterLink v-if="!isLoggedIn" to="/signup">Join now</RouterLink>
+        <div v-if="!isLoggedIn">
+          <RouterLink to="/">Sign in</RouterLink>
+          <RouterLink to="/signup">Join now</RouterLink>
+        </div>
 
-        <RouterLink v-if="isLoggedIn" to="/users">Users list</RouterLink>
-        <RouterLink v-if="isLoggedIn" to="/friend-requests">Friend requests</RouterLink>
-        <RouterLink v-if="isLoggedIn" to="/messages">Messages</RouterLink>
-        <RouterLink v-if="isLoggedIn" to="/logout">Logout</RouterLink>
+        <div v-if="isLoggedIn">
+          <RouterLink to="/users">Users list</RouterLink>
+          <RouterLink to="/friend-list">Friend list</RouterLink>
+          <RouterLink to="/friend-requests">Friend requests</RouterLink>
+          <RouterLink to="/messages">Messages</RouterLink>
+          <RouterLink to="/logout">Logout</RouterLink>
+        </div>
       </nav>
     </div>
   </header>
@@ -44,7 +49,7 @@ header {
   width: 125px;
   height: 90px;
   border-radius: 50%;
-  border: rgba(240, 153, 5, 0.9) 1px solid;
+  border: rgba(var(--primary-item-color--orange), 0.9) 1px solid;
   object-fit: cover;
 }
 
@@ -56,7 +61,8 @@ nav {
 }
 
 nav a.router-link-exact-active {
-  color: var(--color-text);
+  color: var(--primary-item-selected);
+  font-weight: bold;
 }
 
 nav a.router-link-exact-active:hover {

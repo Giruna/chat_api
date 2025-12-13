@@ -4,9 +4,9 @@ namespace App\Services;
 
 use App\Models\Message;
 use App\Models\Friendship;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class MessageService
 {
@@ -21,17 +21,23 @@ class MessageService
 
         if (!Friendship::areUsersFriends($senderId, $receiverId)) {
             return response()->json([
+                'success' => false,
                 'message' => 'You can only send messages to friends.'
             ], 403);
         }
 
-        $message = Message::storeMessage($senderId, $receiverId, $text);
+        try {
+            Message::storeMessage($senderId, $receiverId, $text);
+        } catch (Exception $exception) {
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while saving your message. Please try again later.',
+            ], 500);
+        }
 
         return response()->json([
-            'sender_id' => $senderId,
-            'receiver_id' => $receiverId,
+            'success' => true,
             'message' => 'Message sent successfully.',
-            'data' => $message,
         ]);
     }
 
@@ -46,12 +52,16 @@ class MessageService
 
         if (!Friendship::areUsersFriends($senderId, $receiverId)) {
             return response()->json([
+                'success' => false,
                 'message' => 'You can only view conversations with friends.'
             ], 403);
         }
 
         $messages = Message::getConversationBetween($senderId, $receiverId, $perPage);
 
-        return response()->json($messages);
+        return response()->json(array_merge(
+            ['success' => true],
+            $messages->toArray()
+        ));
     }
 }

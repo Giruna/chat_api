@@ -21,6 +21,7 @@ class MessageRequest extends FormRequest
     {
         return [
             'message' => 'required|string|max:2000',
+            'receiver_id' => 'required|int|min:1',
         ];
     }
 }

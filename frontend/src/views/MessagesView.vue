@@ -3,7 +3,7 @@
     <v-row>
       <!-- Friends list -->
       <v-col cols="3">
-        <v-card flat title="Friends">
+        <v-card flat title="Your friends">
           <v-progress-circular
             v-if="loadingFriends"
             color="primary"
@@ -108,6 +108,7 @@
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { errorHandling } from '@/utils/errorHandling.js'
+import { useRoute } from 'vue-router'
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL
 const token = localStorage.getItem('token')
@@ -127,6 +128,9 @@ const page = ref(1)
 const perPage = 5
 const lastPage = ref(1)
 const total = ref(0)
+
+const route = useRoute()
+const initialFriendId = route.params.friendId
 
 // fetch friends
 async function fetchFriends() {
@@ -172,12 +176,12 @@ async function fetchConversation() {
     )
 
     const data = response.data
-    if (data.data) {
+    if (data.success === true && data.data) {
       messages.value = data.data
       lastPage.value = data.last_page
       total.value = data.total
     } else {
-      errorMessage.value = 'No messages found.'
+      errorMessage.value = data.message || 'No messages found.'
     }
   } catch (error) {
     errorMessage.value = errorHandling(error.response)
@@ -202,8 +206,11 @@ async function sendMessage() {
 
   try {
     const response = await axios.post(
-      `${baseUrl}/api/messages/${selectedFriend.value.id}`,
-      { message: newMessage.value },
+      `${baseUrl}/api/messages/send`,
+      {
+        message: newMessage.value,
+        receiver_id: selectedFriend.value.id
+      },
       { headers: { Authorization: `Bearer ${token}` } }
     )
 
@@ -226,7 +233,19 @@ function formatDate(datetime: string) {
   return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 }
 
-onMounted(fetchFriends)
+onMounted(async () => {
+  await fetchFriends()
+
+  if (route.params.friendId) {
+    const id = Number(route.params.friendId)
+    const friend = friends.value.find(f => f.id === id)
+
+    if (friend) {
+      selectFriend(friend)
+    }
+  }
+})
+
 </script>
 
 <style scoped>
@@ -254,7 +273,7 @@ onMounted(fetchFriends)
   word-break: break-word;
 }
 .sent .message-bubble {
-  background-color: #1976d2;
+  background-color: var(--primary-item-selected);
   color: white;
 }
 .timestamp {

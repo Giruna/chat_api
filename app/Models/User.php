@@ -15,7 +15,7 @@ use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
- * @method static Builder activeExcludingUser(int $excludeUserId)
+ * @method static Builder activeExcludingUser(int $excludeUserId, ?string $searchTerm = null)
  *
  * @property int $id
  * @property string $name

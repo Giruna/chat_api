@@ -154,10 +154,11 @@ php artisan migrate
 ---
 
 ### 🔸 Üzenet küldése
-**POST** `/api/messages/{receiverId}`
+**POST** `/api/messages/send`
 ```json
 {
-  "message": "Szia, hogy vagy?"
+  "message": "Szia, hogy vagy?",
+  "receiver_id": 47
 }
 ```
 
@@ -180,7 +181,7 @@ php artisan migrate
 | GET    | `/friend-request/received`  | Friend requests list      | ✅             |
 | GET    | `/friends`                  | Friends list              | ✅             |
 | GET    | `/users`                    | Paginated user list       | ✅             |
-| POST   | `/messages/{receiverId}`    | Send message              | ✅             |
+| POST   | `/messages/send`            | Send message              | ✅             |
 | GET    | `/messages/{friendId}`      | Get conversation          | ✅             |
 
 ---

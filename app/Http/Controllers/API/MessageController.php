@@ -18,14 +18,13 @@ class MessageController extends Controller
 
     /**
      * @param MessageRequest $request
-     * @param int $receiverId
      * @return JsonResponse
      */
-    public function send(MessageRequest $request, int $receiverId): JsonResponse
+    public function send(MessageRequest $request): JsonResponse
     {
         $validated = $request->validated();
 
-        return $this->messageService->sendMessage($receiverId, $validated['message']);
+        return $this->messageService->sendMessage($request->validated('receiver_id'), $validated['message']);
     }
 
     /**

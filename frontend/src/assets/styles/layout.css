@@ -1,0 +1,4 @@
+.users, .login, .logout, .signup, .messages, .friend-requests, .friend-list {
+  min-height: 80vh;
+  display: flex;
+}

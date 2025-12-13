@@ -1,5 +1,13 @@
 @import './base.css';
 
+:root {
+  --primary-item-color--orange: 240, 153, 5;
+  --primary-item-color: rgb(var(--primary-item-color--orange));
+  --primary-item-selected: rgb(226, 23, 117);
+
+  --primary-title: var(--primary-item-selected);
+}
+
 #app {
   max-width: 1280px;
   margin: 0 auto;
@@ -17,14 +25,14 @@ a,
 
 .orange {
   text-decoration: none;
-  color: rgb(240, 153, 5);
+  color: var(--primary-item-color);
   transition: 0.4s;
   padding: 3px;
 }
 
 @media all {
   a {
-    color: rgb(240, 153, 5);
+    color: var(--primary-item-color);
   }
 }
 @media (hover: hover) {
@@ -42,10 +50,5 @@ a,
   #app {
     display: block;
     padding: 0 2rem;
-  }
-
-  .users, .login, .logout, .signup, .messages, .friend-requests {
-    min-height: 80vh;
-    display: flex;
   }
 }

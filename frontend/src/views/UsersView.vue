@@ -11,6 +11,12 @@
         title="Users list"
         flat
       >
+        <v-text-field
+          v-model="search"
+          label="Search users"
+          @input="userSearch"
+        />
+
         <!-- Users' list -->
         <v-data-table
           :headers="headers"
@@ -48,7 +54,7 @@
                 width="22"
                 height="22"
                 style="cursor: pointer"
-                @click="sendMessage(item)"
+                @click="goToMessages(item.id)"
               />
             </div>
           </template>
@@ -93,13 +99,16 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
-import {errorHandling} from "@/utils/errorHandling.js";
+import { errorHandling } from "@/utils/errorHandling.js";
+import { useMessagesNavigation } from '@/composables/useMessagesNavigation'
+
+const { goToMessages } = useMessagesNavigation()
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL
 
 const loading = ref(false)
 const page = ref(1)
-const perPage = ref(5)
+const perPage = ref(10)
 const search = ref('')
 const token = localStorage.getItem('token')
 
@@ -206,8 +215,14 @@ async function addFriend(item) {
   }
 }
 
-function sendMessage(item) {
-  console.log('Send message clicked for:', item.name)
+let searchTimer: any = null
+function userSearch() {
+  clearTimeout(searchTimer)
+
+  searchTimer = setTimeout(() => {
+    page.value = 1
+    fetchUsers()
+  }, 500)
 }
 
 </script>

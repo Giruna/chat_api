@@ -38,7 +38,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users', [UserController::class, 'usersList']);
 
     // Send a message to a friend
-    Route::post('/messages/{receiverId}', [MessageController::class, 'send']);
+    Route::post('/messages/send', [MessageController::class, 'send']);
 
     // Get conversation with a friend (paginated)
     Route::get('/messages/{friendId}', [MessageController::class, 'conversation']);
