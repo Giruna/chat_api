@@ -98,13 +98,10 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import axios from 'axios'
-import { errorHandling } from "@/utils/errorHandling.js";
+import api from "@/plugins/axios.ts";
 import { useMessagesNavigation } from '@/composables/useMessagesNavigation'
 
 const { goToMessages } = useMessagesNavigation()
-
-const baseUrl = import.meta.env.VITE_API_BASE_URL
 
 const loading = ref(false)
 const page = ref(1)
@@ -131,14 +128,11 @@ async function fetchUsers() {
   errorMessage.value = ''
 
   try {
-    const response = await axios.get(`${baseUrl}/api/users`, {
+    const response = await api.get(`/api/users`, {
       params: {
         page: page.value,
         per_page: perPage.value,
         search: search.value,
-      },
-      headers: {
-        Authorization: `Bearer ${token}`,
       },
     })
 
@@ -152,8 +146,8 @@ async function fetchUsers() {
     } else {
       errorMessage.value = data.message || 'Something went wrong.'
     }
-  } catch (error) {
-    errorMessage.value = errorHandling(error.response)
+  } catch (error: any) {
+    errorMessage.value = error.message
   } finally {
     loading.value = false
   }
@@ -189,16 +183,11 @@ function getStatusLabel(status: string | null) {
 
 async function addFriend(item) {
   try {
-    const response = await axios.post(
-      `${baseUrl}/api/friend-request/send`,
+    const response = await api.post(
+      '/api/friend-request/send',
       {
         receiver_id: item.id,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
     )
 
     const data = response.data
@@ -210,8 +199,8 @@ async function addFriend(item) {
     } else {
       errorMessage.value = data.message || 'Something went wrong.'
     }
-  } catch (error) {
-    errorMessage.value = errorHandling(error.response)
+  } catch (error: any) {
+    errorMessage.value = error.message
   }
 }
 

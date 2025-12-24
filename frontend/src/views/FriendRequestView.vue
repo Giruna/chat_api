@@ -69,10 +69,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import axios from 'axios'
-import {errorHandling} from "@/utils/errorHandling.js";
-
-const baseUrl = import.meta.env.VITE_API_BASE_URL
+import api from "@/plugins/axios.ts";
 
 const loading = ref(false)
 const token = localStorage.getItem('token')
@@ -93,11 +90,7 @@ async function fetchUsersWithFriendRequest() {
   errorMessage.value = ''
 
   try {
-    const response = await axios.get(`${baseUrl}/api/friend-request/received`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    const response = await api.get(`/api/friend-request/received`)
 
     const data = response.data
 
@@ -106,8 +99,8 @@ async function fetchUsersWithFriendRequest() {
     } else {
       errorMessage.value = data.message || 'Something went wrong.'
     }
-  } catch (error) {
-    errorMessage.value = errorHandling(error.response)
+  } catch (error: any) {
+    errorMessage.value = error.message
   } finally {
     loading.value = false
   }
@@ -116,15 +109,10 @@ async function fetchUsersWithFriendRequest() {
 // Handle Accept / Reject actions
 async function acceptRequest(item: any) {
   try {
-    const response = await axios.post(
-      `${baseUrl}/api/friend-request/accept`,
+    const response = await api.post(
+      `/api/friend-request/accept`,
       {
         sender_id: item.id,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       }
     )
 
@@ -137,22 +125,17 @@ async function acceptRequest(item: any) {
     } else {
       errorMessage.value = data.message || 'Something went wrong.'
     }
-  } catch (error) {
-    errorMessage.value = errorHandling(error.response)
+  } catch (error: any) {
+    errorMessage.value = error.message
   }
 }
 
 async function rejectRequest(item: any) {
   try {
-    const response = await axios.post(
-      `${baseUrl}/api/friend-request/reject`,
+    const response = await api.post(
+      `/api/friend-request/reject`,
       {
         sender_id: item.id,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
       }
     )
 
@@ -165,8 +148,8 @@ async function rejectRequest(item: any) {
     } else {
       errorMessage.value = data.message || 'Something went wrong.'
     }
-  } catch (error) {
-    errorMessage.value = errorHandling(error.response)
+  } catch (error: any) {
+    errorMessage.value = error.message
   }
 }
 

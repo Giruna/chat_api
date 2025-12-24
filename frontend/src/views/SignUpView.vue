@@ -55,11 +55,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import axios from 'axios'
-import { errorHandling } from '@/utils/errorHandling.js'
+import api from "@/plugins/axios.ts";
 import router from "@/router/index.ts";
-
-const baseUrl = import.meta.env.VITE_API_BASE_URL
 
 const name = ref('')
 const email = ref('')
@@ -75,7 +72,7 @@ async function onSubmit() {
   successMessage.value = ''
 
   try {
-    const response = await axios.post(`${baseUrl}/api/register`, {
+    const response = await api.post(`/api/register`, {
       name: name.value,
       email: email.value,
       password: password.value,
@@ -90,8 +87,8 @@ async function onSubmit() {
     } else {
       errorMessage.value = data.message || 'Registration failed.'
     }
-  } catch (error) {
-    errorMessage.value = errorHandling(error.response)
+  } catch (error: any) {
+    errorMessage.value = error.message
   }
 }
 

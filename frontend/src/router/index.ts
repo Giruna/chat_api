@@ -14,44 +14,69 @@ const router = createRouter({
       path: '/',
       name: 'login',
       component: LoginView,
-    },
-    {
-      path: '/logout',
-      name: 'logout',
-      component: LogoutView,
+      meta: { guestOnly: true },
     },
     {
       path: '/signup',
       name: 'signup',
       component: SignUpView,
+      meta: { guestOnly: true },
+    },
+    {
+      path: '/logout',
+      name: 'logout',
+      component: LogoutView,
+      meta: { requiresAuth: true },
     },
     {
       path: '/users',
       name: 'users',
       component: UsersView,
+      meta: { requiresAuth: true },
     },
     {
       path: '/friend-list',
       name: 'friend-list',
       component: FriendListView,
+      meta: { requiresAuth: true },
     },
     {
       path: '/friend-requests',
       name: 'friend-requests',
       component: FriendRequestView,
-    },
-    {
-      path: '/messages',
-      name: 'messages',
-      component: MessagesView,
+      meta: { requiresAuth: true },
     },
     {
       path: '/messages/:friendId?',
       name: 'messages',
       component: MessagesView,
-      props: true
-    }
+      props: true,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      redirect: () => {
+        const isLoggedIn = !!localStorage.getItem('token')
+
+        return isLoggedIn
+          ? { name: 'users' }
+          : { name: 'login' }
+      },
+    },
   ],
+})
+
+router.beforeEach((to) => {
+  const isLoggedIn = !!localStorage.getItem('token')
+
+  if (to.meta.requiresAuth && !isLoggedIn) {
+    return { name: 'login' }
+  }
+
+  if (to.meta.guestOnly && isLoggedIn) {
+    return { name: 'users' }
+  }
 })
 
 export default router

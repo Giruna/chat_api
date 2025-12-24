@@ -106,11 +106,9 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import axios from 'axios'
-import { errorHandling } from '@/utils/errorHandling.js'
+import api from "@/plugins/axios.ts";
 import { useRoute } from 'vue-router'
 
-const baseUrl = import.meta.env.VITE_API_BASE_URL
 const token = localStorage.getItem('token')
 const userId = Number(localStorage.getItem('userid'))
 
@@ -130,7 +128,6 @@ const lastPage = ref(1)
 const total = ref(0)
 
 const route = useRoute()
-const initialFriendId = route.params.friendId
 
 // fetch friends
 async function fetchFriends() {
@@ -138,9 +135,7 @@ async function fetchFriends() {
   errorMessage.value = ''
 
   try {
-    const response = await axios.get(`${baseUrl}/api/friends`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
+    const response = await api.get(`/api/friends`)
 
     const data = response.data
     if (data.success === true) {
@@ -148,8 +143,8 @@ async function fetchFriends() {
     } else {
       errorMessage.value = data.message || 'Failed to load friends.'
     }
-  } catch (error) {
-    errorMessage.value = errorHandling(error.response)
+  } catch (error: any) {
+    errorMessage.value = error.message
   } finally {
     loadingFriends.value = false
   }
@@ -164,14 +159,13 @@ async function fetchConversation() {
   messages.value = []
 
   try {
-    const response = await axios.get(
-      `${baseUrl}/api/messages/${selectedFriend.value.id}`,
+    const response = await api.get(
+      `/api/messages/${selectedFriend.value.id}`,
       {
         params: {
           page: page.value,
           per_page: perPage,
         },
-        headers: { Authorization: `Bearer ${token}` },
       }
     )
 
@@ -183,8 +177,8 @@ async function fetchConversation() {
     } else {
       errorMessage.value = data.message || 'No messages found.'
     }
-  } catch (error) {
-    errorMessage.value = errorHandling(error.response)
+  } catch (error: any) {
+    errorMessage.value = error.message
   } finally {
     loadingMessages.value = false
   }
@@ -205,13 +199,12 @@ async function sendMessage() {
   errorMessage.value = ''
 
   try {
-    const response = await axios.post(
-      `${baseUrl}/api/messages/send`,
+    const response = await api.post(
+      `/api/messages/send`,
       {
         message: newMessage.value,
         receiver_id: selectedFriend.value.id
       },
-      { headers: { Authorization: `Bearer ${token}` } }
     )
 
     const data = response.data
@@ -221,8 +214,8 @@ async function sendMessage() {
     } else {
       errorMessage.value = data.message || 'Could not send message.'
     }
-  } catch (error) {
-    errorMessage.value = errorHandling(error.response)
+  } catch (error: any) {
+    errorMessage.value = error.message
   } finally {
     sending.value = false
   }

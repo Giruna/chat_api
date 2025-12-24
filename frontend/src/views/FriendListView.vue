@@ -65,13 +65,11 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import axios from 'axios'
-import {errorHandling} from "@/utils/errorHandling.js";
+import api from '@/plugins/axios'
+
 import { useMessagesNavigation } from '@/composables/useMessagesNavigation'
 
 const { goToMessages } = useMessagesNavigation()
-
-const baseUrl = import.meta.env.VITE_API_BASE_URL
 
 const loading = ref(false)
 const token = localStorage.getItem('token')
@@ -93,11 +91,8 @@ async function fetchFriends() {
   errorMessage.value = ''
 
   try {
-    const response = await axios.get(`${baseUrl}/api/friends`, {
+    const response = await api.get('/api/friends', {
       params: {
-      },
-      headers: {
-        Authorization: `Bearer ${token}`,
       },
     })
 
@@ -108,8 +103,8 @@ async function fetchFriends() {
     } else {
       errorMessage.value = data.message || 'Something went wrong.'
     }
-  } catch (error) {
-    errorMessage.value = errorHandling(error.response)
+  } catch (error: any) {
+    errorMessage.value = error.message
   } finally {
     loading.value = false
   }

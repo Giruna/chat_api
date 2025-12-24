@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
+    private int $messagesPerPage = 20;
+
     protected MessageService $messageService;
 
     public function __construct(MessageService $messageService) {
@@ -34,7 +36,7 @@ class MessageController extends Controller
      */
     public function conversation(Request $request, int $friendId): JsonResponse
     {
-        $perPage = $request->query('per_page', 20);
+        $perPage = $request->query('per_page', $this->messagesPerPage);
 
         return $this->messageService->getConversation($friendId, $perPage);
     }

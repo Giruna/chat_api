@@ -33,12 +33,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import axios from 'axios'
-import { errorHandling } from '@/utils/errorHandling.js'
+import api from '@/plugins/axios'
 import router from "@/router/index.ts";
 import {saveLoginData} from "@/utils/auth.js";
 
-const baseUrl = import.meta.env.VITE_API_BASE_URL
 const email = ref('')
 const password = ref('')
 const errorMessage = ref('')
@@ -47,7 +45,7 @@ async function onSubmit() {
   errorMessage.value = '' // clear previous error
 
   try {
-    const response = await axios.post(`${baseUrl}/api/login`, {
+    const response = await api.post(`/api/login`, {
       email: email.value,
       password: password.value
     })
@@ -60,8 +58,8 @@ async function onSubmit() {
     } else {
       errorMessage.value = data.message || 'Login failed.'
     }
-  } catch (error) {
-    errorMessage.value = errorHandling(error.response)
+  } catch (error: any) {
+    errorMessage.value = error.message
   }
 }
 </script>
