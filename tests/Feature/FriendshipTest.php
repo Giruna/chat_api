@@ -47,7 +47,10 @@ class FriendshipTest extends TestCase
 
         $this->assertEquals(404, $response->status());
         $this->assertEquals(
-            ['message' => 'The user you are trying to add does not exist.'],
+            [
+                'success' => false,
+                'message' => 'The user you are trying to add does not exist.'
+            ],
             $response->getData(true)
         );
     }
@@ -66,7 +69,10 @@ class FriendshipTest extends TestCase
 
         $this->assertEquals(400, $response->status());
         $this->assertEquals(
-            ['message' => 'The user is not active and cannot be added as a friend.'],
+            [
+                'success' => false,
+                'message' => 'The user is not active and cannot be added as a friend.'
+            ],
             $response->getData(true)
         );
     }
@@ -98,7 +104,10 @@ class FriendshipTest extends TestCase
 
          $this->assertEquals(400, $response->status());
          $this->assertEquals(
-             ['message' => 'A friendship request or connection already exists with this user.'],
+             [
+                 'success' => false,
+                 'message' => 'A friendship request or connection already exists with this user.'
+             ],
              $response->getData(true)
          );
      }
