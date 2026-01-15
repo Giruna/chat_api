@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\API\Auth\RegisterController;
+use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\FriendshipController;
 use App\Http\Controllers\Api\MessageController;
