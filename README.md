@@ -55,26 +55,42 @@ git clone https://github.com/Giruna/chat_api.git
 cd chat-api
 ```
 
-### 2️⃣ Telepítsd a függőségeket
+### 2️⃣ Backend függőségek telepítése
 ```bash
 composer install
 ```
 
-### 3️⃣ Szerkeszd az `.env` fájlt
-Az adatbázis beállításokat, igény szerint:
-```env
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=chat_api
-DB_USERNAME=root
-DB_PASSWORD=
+### 3️⃣ Környezeti változók beállítása (Backend)
+Másold le az alapértelmezett környezeti konfigurációt, majd generálj alkalmazáskulcsot.  
+Szükség esetén állítsd be az adatbázis kapcsolatot a `.env` fájlban.
+```bash
+cp .env.example .env
+php artisan key:generate
 ```
 
-### 4️⃣ Futtasd a migrációkat
+### 4️⃣ Frontend függőségek telepítése és indítása
+```bash
+cd frontend
+cp .env.example .env
+npm install
+npm run dev
+cd ..
+```
+A frontend alapértelmezett URL-je:  
+http://localhost:5173
+
+### 5️⃣ Adatbázis migrációk futtatása
 ```bash
 php artisan migrate
 ```
+
+### 6️⃣ Backend alkalmazás indítása
+```bash
+php artisan serve
+```
+A backend alapértelmezett URL-je:  
+http://127.0.0.1:8000
+
 ---
 
 ## 🔐 API végpontok
