@@ -2,7 +2,7 @@
   <v-container class="d-flex justify-center signup">
     <v-card class="pa-6" width="400">
       <v-card-title class="text-h5 text-center mb-4">
-        Sign in
+        Join now
       </v-card-title>
 
       <v-card-text>

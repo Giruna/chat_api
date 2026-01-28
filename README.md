@@ -77,11 +77,14 @@ npm run dev
 cd ..
 ```
 A frontend alapértelmezett URL-je:  
-http://localhost:5173
+http://localhost:5173  
+Teszt felhasználó:  
+baxter@gmail.com/1234
 
 ### 5️⃣ Adatbázis migrációk futtatása
 ```bash
 php artisan migrate
+php artisan db:seed
 ```
 
 ### 6️⃣ Backend alkalmazás indítása

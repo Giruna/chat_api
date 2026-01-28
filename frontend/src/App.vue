@@ -4,10 +4,14 @@ import { RouterLink, RouterView } from 'vue-router'
 import HeaderTexts from './components/HeaderTexts.vue'
 
 const isLoggedIn = ref(!!localStorage.getItem('token'))
+const username = ref<string | null>(localStorage.getItem('username'))
 
-window.addEventListener('auth-changed', () => {
+const syncAuthState = () => {
   isLoggedIn.value = !!localStorage.getItem('token')
-})
+  username.value = localStorage.getItem('username')
+}
+
+window.addEventListener('auth-changed', syncAuthState)
 </script>
 
 <template>
@@ -15,7 +19,10 @@ window.addEventListener('auth-changed', () => {
     <img alt="Chatterboxerino logo" class="logo" src="@/assets/logo.jpg" />
 
     <div class="wrapper">
-      <HeaderTexts msg="Chatterboxerino!" />
+      <HeaderTexts
+        msg="Chatterboxerino!"
+        :username="username"
+      />
 
       <nav>
         <div v-if="!isLoggedIn">

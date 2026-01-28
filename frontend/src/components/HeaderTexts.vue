@@ -1,14 +1,14 @@
 <script setup lang="ts">
 defineProps<{
   msg: string
+  username: string | null
 }>()
-const username = localStorage.getItem('username')
 </script>
 
 <template>
   <div class="greetings">
     <h1 class="orange">{{ msg }}</h1>
-    <h3>Hi {{ username }}!<br>
+    <h3>Hi {{ username ?? 'Guest' }}!<br>
       Ready to chat, laugh, and make some new friends?
       Dive into Chatterboxerino and start the conversation.<br>
       Chatterboxerino is where the fun begins!
